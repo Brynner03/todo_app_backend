@@ -18,16 +18,23 @@ const GetUserByPk = async (req, res) => {
   }
 };
 
-const CreateUser = async ({ email, hashedPassword, name }) => {
+const CreateUser = async (req, res) => {
   try {
-    const user = await User.create({ email, password: hashedPassword, name });
+    const {email, password, name} = req.body
+    if (!email || !password || !name) {
+      throw new Error('Email, password, or name cannot be empty');
+    }
+
+    const user = await User.create({ email, password, name });
     // Creating default board for the user
     await Board.create({ title: 'Default Board', userId: user.id });
     const userWithBoards = await User.findByPk(user.id, {
-      include: Board,
+      include: {
+        model: Board,
+        include: Task,
+      },
     });
-
-    return userWithBoards;
+    res.json(userWithBoards);
   } catch (error) {
     console.log(error);
     throw error;

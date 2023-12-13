@@ -1,6 +1,6 @@
 # ToDo App Backend
 
-This repository contains the backend implementation for a ToDo application. It manages user authentication, boards, tasks, and their associations, serving as the server-side implementation for the ToDo app.
+This repository contains the backend implementation for a ToDo application. It manages users boards, tasks, and their associations, serving as the server-side implementation for the ToDo app.
 
 ---
 
